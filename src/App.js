@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { ColorModeContext,useMode } from "./Theme";
+import { CssBaseline,ThemeProvider } from "@mui/material";
 
-function App() {
+import Topbar from "./Scenes/Global/Topbar";
+import Sidebar2 from "./Scenes/Global/Sidebar";
+import Dashboard from "./Scenes/Dashboards/Dashboard";
+import Team from "./Scenes/Team/Team";
+import Contacts from "./Scenes/Contacts/Contacts";
+import {Routes,Route} from "react-router-dom"
+
+
+
+
+function App(){
+  const[theme,colorMode] = useMode();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <ColorModeContext.Provider value={colorMode}>
+<ThemeProvider theme={theme}> 
+<CssBaseline />
+<div className="app">
+<Sidebar2 />
+<main className="content">
+  <Topbar/>
+  
+  <Routes>
+  <Route path="/" element ={<Dashboard />}/>
+  <Route path ="/Team" element ={<Team />} />
+  <Route path ="/Contacts" element ={<Contacts />} />
+  </Routes>  
+  </main>
+</div>
+</ThemeProvider>
+   </ColorModeContext.Provider>
+
+
   );
 }
 
